@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.161-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="janela.CriarProduto">
+   <children>
+      <TextField fx:id="inNome" layoutX="115.0" layoutY="41.0" />
+      <TextField fx:id="inVersao" layoutX="115.0" layoutY="91.0" />
+      <TextArea fx:id="inDescricao" layoutX="101.0" layoutY="148.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextField fx:id="inCusto" layoutX="116.0" layoutY="380.0" />
+      <TextField fx:id="inPreco" layoutX="115.0" layoutY="430.0" />
+      <Button layoutX="175.0" layoutY="560.0" mnemonicParsing="false" onAction="#criarProduto" text="Criar" />
+      <RadioButton fx:id="rSoft" layoutX="142.0" layoutY="486.0" mnemonicParsing="false" text="Software" />
+      <RadioButton fx:id="rHard" layoutX="142.0" layoutY="514.0" mnemonicParsing="false" text="Hardware" />
+      <Label layoutX="115.0" layoutY="25.0" text="Nome" />
+      <Label layoutX="112.0" layoutY="75.0" text="Versão" />
+      <Label layoutX="98.0" layoutY="132.0" text="Descrição" />
+      <Label layoutX="115.0" layoutY="364.0" text="Preço de custo" />
+      <Label layoutX="115.0" layoutY="414.0" text="Preço de venda" />
+   </children>
+</AnchorPane>
