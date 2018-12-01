@@ -18,14 +18,14 @@ public class Empresa {
     private List<Servidor> servidores;
     private List<Fabrica> fabricas;
     private List<Galpao> galpoes;
-    private List<Produto> produtos;
+    private List<Software> softwares;
+    private List<Hardware> hardwares;
 
     public Empresa(String nome) {
         this.nome = nome;
         servidores = new ArrayList<>();
         fabricas = new ArrayList<>();
         galpoes = new ArrayList<>();
-        produtos = new ArrayList<>();
     }
 
     public void comprarServidor(double preco, int capacidade) throws VerbaInsuficiente {
