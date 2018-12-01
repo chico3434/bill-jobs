@@ -1,11 +1,9 @@
 package janela;
 
-import com.google.gson.Gson;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -15,7 +13,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import objeto.*;
@@ -23,7 +20,6 @@ import utils.Jogo;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class Tela {
@@ -150,9 +146,11 @@ public class Tela {
             }
         }
 
-        List<Produto> produtos = Jogo.getEmpresario().getEmpresa().getProdutos();
+        List<Produto> produtos = new ArrayList<>();
+        produtos.addAll(Jogo.getEmpresario().getEmpresa().getSoftwares());
+        produtos.addAll(Jogo.getEmpresario().getEmpresa().getHardwares());
         for(Produto p : produtos){
-            CelulaTabela ct = new CelulaTabela(p.getId(), criarLabel(p.getId()), criarButton("Usar", p), criarButton("Remover", p));
+            CelulaTabela ct = new CelulaTabela(p.getId(), criarLabel(p.getId()), criarButton("Editar", p), criarButton("Remover", p));
             if (!cProdutos.contains(ct)){
                 cProdutos.add(ct);
                 boxProdutos.getChildren().add(ct);
@@ -214,7 +212,9 @@ public class Tela {
                     return;
                 }
 
-                List<Produto> produtos = Jogo.getEmpresario().getEmpresa().getProdutos();
+                List<Produto> produtos = new ArrayList<>();
+                produtos.addAll(Jogo.getEmpresario().getEmpresa().getSoftwares());
+                produtos.addAll(Jogo.getEmpresario().getEmpresa().getHardwares());
 
                 if (produtos.contains(new Produto(string, ""))){
                     Produto p = produtos.get(produtos.indexOf(new Produto(string, "")));
@@ -286,6 +286,8 @@ public class Tela {
                     Jogo.getEmpresario().getEmpresa().venderGalpao((Galpao) i);
                 }
                 atualizarDados();
+            } else if(string.equals("Editar")) {
+            	new Alert(Alert.AlertType.WARNING, "Função ainda não implementada").show();
             }
         });
         return button;
@@ -391,5 +393,10 @@ public class Tela {
 
     public void salvarJogo(ActionEvent actionEvent) {
         Jogo.salvar();
+    }
+    
+    public void mostrarComoJogar(ActionEvent actionEvent) {
+        ComoJogar cj = new ComoJogar();
+        cj.showAndWait();
     }
 }

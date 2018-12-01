@@ -26,6 +26,8 @@ public class Empresa {
         servidores = new ArrayList<>();
         fabricas = new ArrayList<>();
         galpoes = new ArrayList<>();
+        softwares = new ArrayList<>();
+        hardwares = new ArrayList<>();
     }
 
     public void comprarServidor(double preco, int capacidade) throws VerbaInsuficiente {
@@ -61,19 +63,19 @@ public class Empresa {
     public void criarSoftware(String nome, String versao, String descricao, double custo, double preco) throws VerbaInsuficiente, ProdutoExistente {
         if (verba < custo){
             throw new VerbaInsuficiente("Verba Insuficiente");
-        } else if (produtos.contains(new Software(nome, versao))) {
+        } else if (softwares.contains(new Software(nome, versao))) {
             throw new ProdutoExistente("Produto já existe!");
         } else {
             verba -= custo;
-            produtos.add(new Software(nome, versao, descricao, custo, preco));
+            softwares.add(new Software(nome, versao, descricao, custo, preco));
         }
     }
 
     public void criarHardware(String nome, String versao, String descricao, double custo, double preco) throws ProdutoExistente {
-        if (produtos.contains(new Hardware(nome, versao))){
+        if (hardwares.contains(new Hardware(nome, versao))){
             throw new ProdutoExistente("Produto já existe!");
         } else {
-            produtos.add(new Hardware(nome, versao, descricao, custo, preco));
+            hardwares.add(new Hardware(nome, versao, descricao, custo, preco));
         }
     }
 
@@ -195,7 +197,7 @@ public class Empresa {
     }
 
     public void removerSoftware(Software s){
-        produtos.remove(produtos.indexOf(s));
+        softwares.remove(softwares.indexOf(s));
         for(Servidor se: servidores){
             while (se.getSoftwares().contains(s)){
                 se.getSoftwares().remove(s);
@@ -204,7 +206,7 @@ public class Empresa {
     }
 
     public void removerHardware(Hardware h){
-        produtos.remove(h);
+        hardwares.remove(h);
         for (Fabrica f : fabricas){
             if (f.getProduto().equals(h)){
                 f.removerProduto();
@@ -276,11 +278,19 @@ public class Empresa {
         this.servidores = servidores;
     }
 
-    public List<Produto> getProdutos() {
-        return produtos;
-    }
+	public List<Hardware> getHardwares() {
+		return hardwares;
+	}
 
-    public void setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-    }
+	public void setHardwares(List<Hardware> hardwares) {
+		this.hardwares = hardwares;
+	}
+
+	public List<Software> getSoftwares() {
+		return softwares;
+	}
+
+	public void setSoftwares(List<Software> softwares) {
+		this.softwares = softwares;
+	}
 }

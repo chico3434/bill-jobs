@@ -1,6 +1,7 @@
 package janela;
 
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
@@ -20,12 +21,19 @@ public class CelulaTabela extends HBox {
     public CelulaTabela(String id, Label lbl, Button btn1, Button btn2){
         this.idComp = id;
         label = lbl;
+        
+        HBox botoes = new HBox();
         button1 = btn1;
         button2 = btn2;
+        
+        botoes.getChildren().addAll(button1, button2);
+        botoes.setSpacing(5);
 
         this.setPadding(new Insets(10));
+        this.setAlignment(Pos.CENTER);
+        this.setSpacing(20);
 
-        this.getChildren().addAll(label, button1, button2);
+        this.getChildren().addAll(label, botoes);
     }
 
     public void remover(){

@@ -30,6 +30,7 @@
                 </Menu>
                 <Menu mnemonicParsing="false" text="Ajuda">
                     <items>
+                     	<MenuItem mnemonicParsing="false" onAction="#mostrarComoJogar" text="Como Jogar" />
                         <MenuItem mnemonicParsing="false" onAction="#abrirSobre" text="Sobre" />
                     </items>
                 </Menu>

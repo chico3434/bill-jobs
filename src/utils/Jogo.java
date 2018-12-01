@@ -15,11 +15,13 @@ import java.io.*;
 import java.lang.reflect.Type;
 
 public class Jogo {
-
+	
+	// precisa estar dentro de empresario para ser salvo pelo gson
+	// Pode ser um dado interessante para balancear melhor o jogo no futuro
     private static int tempo = 0;
 
     private static String relatorioMensal;
-
+    
     private static Empresario empresario;
 
     public static void carregarEmpresario(String nome) throws FileNotFoundException{
@@ -110,13 +112,11 @@ public class Jogo {
     public static void criarHardware(String nome, String versao, String descricao, double custo, double preco) throws ProdutoExistente {
         empresario.getEmpresa().criarHardware(nome, versao, descricao, custo, preco);
     }
-
+    
+    // Hospedar Software em um slot de servidor
     public static void hospedarSoftware(Servidor servidor, String softwareId) throws Exception {
-        if (empresario.getEmpresa().getProdutos().contains(new Software(softwareId, ""))) {
-            Produto p = empresario.getEmpresa().getProdutos().get(empresario.getEmpresa().getProdutos().indexOf(new Software(softwareId, "")));
-            if (p instanceof Software){
-                Software s = (Software) p;
-
+        if (empresario.getEmpresa().getSoftwares().contains(new Software(softwareId, ""))) {
+            Software s = empresario.getEmpresa().getSoftwares().get(empresario.getEmpresa().getSoftwares().indexOf(new Software(softwareId, "")));
                 /*
                  * O jeito abaixo de se fazer é mais complicado do que deveria, pode ser mais simples e por isso está comentado
                  * Como esse método recebe servidor como referencia alterá-lo irá alterar o que mandou a referencia
@@ -127,20 +127,15 @@ public class Jogo {
                  */
 
                 servidor.hospedarSoftware(s);
-
-            } else {
-                throw new Exception("Servidor só hospeda software");
-            }
         } else {
             throw new ProdutoExistente("Software não existe!");
         }
     }
-
+    
+    // Hospedar Software em todos os slots do servidor
     public static void hospedarSoftwareAll(Servidor servidor, String softwareId) throws Exception {
-        if (empresario.getEmpresa().getProdutos().contains(new Software(softwareId, ""))) {
-            Produto p = empresario.getEmpresa().getProdutos().get(empresario.getEmpresa().getProdutos().indexOf(new Software(softwareId, "")));
-            if (p instanceof Software){
-                Software s = (Software) p;
+        if (empresario.getEmpresa().getSoftwares().contains(new Software(softwareId, ""))) {
+        	Software s = empresario.getEmpresa().getSoftwares().get(empresario.getEmpresa().getSoftwares().indexOf(new Software(softwareId, "")));
 
                 /*
                  * O jeito abaixo de se fazer é mais complicado do que deveria, pode ser mais simples e por isso está comentado
@@ -152,19 +147,15 @@ public class Jogo {
                  */
 
                 servidor.hospedarSoftwareEmTodo(s);
-            } else {
-                throw new Exception("Servidor só hospeda software");
-            }
         } else {
             throw new ProdutoExistente("Software não existe!");
         }
     }
-
+    
+    // Trocar um Software por outro em um slot de Servidor
     public static void trocarSoftware(Servidor servidor, String softwareId, Software software) throws Exception {
-        if (empresario.getEmpresa().getProdutos().contains(new Software(softwareId, ""))) {
-            Produto p = empresario.getEmpresa().getProdutos().get(empresario.getEmpresa().getProdutos().indexOf(new Software(softwareId, "")));
-            if (p instanceof Software){
-                Software s = (Software) p;
+        if (empresario.getEmpresa().getSoftwares().contains(new Software(softwareId, ""))) {
+            Software s = empresario.getEmpresa().getSoftwares().get(empresario.getEmpresa().getSoftwares().indexOf(new Software(softwareId, "")));
                 /*
                  * O jeito abaixo de se fazer é mais complicado do que deveria, pode ser mais simples e por isso está comentado
                  * Como esse método recebe servidor como referencia alterá-lo irá alterar o que mandou a referencia
@@ -174,23 +165,16 @@ public class Jogo {
                  *
                  */
                 servidor.trocarSoftware(s, software);
-            } else {
-                throw new Exception("Servidor só hospeda software");
-            }
         } else {
             throw new ProdutoExistente("Software não existe!");
         }
     }
-
+    
+    // Alocar um Hardware em uma Fabrica para que ele possa ser produzido ao passar o tempo
     public static void alocarHardwareEmFabrica(Fabrica fabrica, String hardwareId) throws Exception {
-        if (empresario.getEmpresa().getProdutos().contains(new Hardware(hardwareId, ""))){
-            Produto p = empresario.getEmpresa().getProdutos().get(empresario.getEmpresa().getProdutos().indexOf(new Hardware(hardwareId, "")));
-            if (p instanceof Hardware){
-                Hardware hardware = (Hardware) p;
-                fabrica.setProduto(hardware);
-            } else {
-                throw new Exception("Fábrica só aloca Hardware!");
-            }
+        if (empresario.getEmpresa().getHardwares().contains(new Hardware(hardwareId, ""))){
+            Hardware h = empresario.getEmpresa().getHardwares().get(empresario.getEmpresa().getHardwares().indexOf(new Hardware(hardwareId, "")));
+            fabrica.setProduto(h);
         } else {
             throw new ProdutoExistente("Hardware não existe!");
         }
@@ -205,16 +189,19 @@ public class Jogo {
 
         // Fabricar e estocar hardwares
         empresario.getEmpresa().produzirHardware();
+        
         // Vender Hardwares
         empresario.getEmpresa().venderHardware();
-
+        
+        // Tempo precisa estar na classe Empresario (para poder ser salvo) para poder ser mostrado na janela
         System.out.println("Tempo: " + tempo);
     }
-
+    
+    // Método criado para que outras classes possam adicionar informações no relatório mensal
     public static void addDado(String str){
         relatorioMensal += str + "\n";
     }
-
+    
     public static String getRelatorio(){
         return relatorioMensal;
     }
