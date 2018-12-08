@@ -1,7 +1,6 @@
 package objeto;
 
 import exceptions.GalpaoLotado;
-import exceptions.NivelBaixo;
 import exceptions.ProdutoExistente;
 import exceptions.VerbaInsuficiente;
 import utils.Jogo;
@@ -77,6 +76,31 @@ public class Empresa {
         } else {
             hardwares.add(new Hardware(nome, versao, descricao, custo, preco));
         }
+    }
+
+    public void atualizarProduto(Produto p, String descricao, double custo, double preco) throws VerbaInsuficiente{
+        if (p instanceof Software){
+            if (verba < custo){
+                throw new VerbaInsuficiente("Verba Insuficiente");
+            }
+            p.setCusto(p.getCusto() + custo);
+            verba -= custo;
+        } else {
+            p.setCusto(custo);
+        }
+        p.setDescricao(descricao);
+        p.setPreco(preco);
+    }
+
+    public void atualizarSoftware(Produto p, String versao, String descricao, double custo, double preco) throws VerbaInsuficiente {
+        if (verba < custo){
+            throw new VerbaInsuficiente("Verba Insuficiente");
+        }
+        verba -= custo;
+        p.setVersao(versao);
+        p.setDescricao(descricao);
+        p.setCusto(p.getCusto() + custo);
+        p.setPreco(preco);
     }
 
     public void venderSoftwares(){

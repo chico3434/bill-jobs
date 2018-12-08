@@ -158,6 +158,12 @@ public class Tela {
         }
     }
 
+    public void removerProdutoCelula(Produto p){
+        CelulaTabela ct = new CelulaTabela(p.getId(), criarLabel(p.getId()), criarButton("Editar", p), criarButton("Remover", p));
+        cProdutos.remove(ct);
+        boxProdutos.getChildren().remove(ct);
+    }
+
     public void atualizarDados(){
         // Atualizando área monetária
         lblVerbaEmpresa.setText(Jogo.getVerba());
@@ -287,7 +293,11 @@ public class Tela {
                 }
                 atualizarDados();
             } else if(string.equals("Editar")) {
-            	new Alert(Alert.AlertType.WARNING, "Função ainda não implementada").show();
+            	//new Alert(Alert.AlertType.WARNING, "Função ainda não implementada").show();
+                Produto p = (Produto) o;
+                CriarEditarProduto cep = new CriarEditarProduto(p);
+                cep.showAndWait();
+                atualizarDados();
             }
         });
         return button;
@@ -354,17 +364,9 @@ public class Tela {
     }
 
     public void criarProduto(ActionEvent actionEvent) {
-        try {
-            Main.criarProduto = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/criar-produto.fxml"));
-            Main.criarProduto.setTitle("Criar Produto");
-            Main.criarProduto.setScene(new Scene(root, 400, 600));
-            Main.criarProduto.showAndWait();
-
-            atualizarDados();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        CriarEditarProduto cep = new CriarEditarProduto(null);
+        cep.showAndWait();
+        atualizarDados();
     }
 
     public void transferirOuReceber(ActionEvent actionEvent) {

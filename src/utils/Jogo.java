@@ -112,6 +112,14 @@ public class Jogo {
     public static void criarHardware(String nome, String versao, String descricao, double custo, double preco) throws ProdutoExistente {
         empresario.getEmpresa().criarHardware(nome, versao, descricao, custo, preco);
     }
+
+    public static void atualizarProduto(Produto p, String descricao, double custo, double preco) throws VerbaInsuficiente {
+        empresario.getEmpresa().atualizarProduto(p, descricao, custo, preco);
+    }
+
+    public static void atualizarSoftware(Produto p, String versao, String descricao, double custo, double preco) throws VerbaInsuficiente {
+        empresario.getEmpresa().atualizarSoftware(p, versao, descricao, custo, preco);
+    }
     
     // Hospedar Software em um slot de servidor
     public static void hospedarSoftware(Servidor servidor, String softwareId) throws Exception {

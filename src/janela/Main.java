@@ -12,7 +12,6 @@ public class Main extends Application {
     public static Stage tela;
     public static Stage criarEmpresa;
     public static Stage comprar;
-    public static Stage criarProduto;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
