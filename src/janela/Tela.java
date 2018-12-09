@@ -149,19 +149,18 @@ public class Tela {
         List<Produto> produtos = new ArrayList<>();
         produtos.addAll(Jogo.getEmpresario().getEmpresa().getSoftwares());
         produtos.addAll(Jogo.getEmpresario().getEmpresa().getHardwares());
+        for(CelulaTabela c : cProdutos){
+            boxProdutos.getChildren().remove(c);
+        }
+        cProdutos.clear();
         for(Produto p : produtos){
             CelulaTabela ct = new CelulaTabela(p.getId(), criarLabel(p.getId()), criarButton("Editar", p), criarButton("Remover", p));
             if (!cProdutos.contains(ct)){
                 cProdutos.add(ct);
                 boxProdutos.getChildren().add(ct);
+                boxProdutos.getChildren();
             }
         }
-    }
-
-    public void removerProdutoCelula(Produto p){
-        CelulaTabela ct = new CelulaTabela(p.getId(), criarLabel(p.getId()), criarButton("Editar", p), criarButton("Remover", p));
-        cProdutos.remove(ct);
-        boxProdutos.getChildren().remove(ct);
     }
 
     public void atualizarDados(){
