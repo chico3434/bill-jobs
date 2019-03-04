@@ -12,18 +12,18 @@ public class Shed extends Infrastructure {
     private List<Hardware> hardwares;
     private List<Integer> quantity;
 
-    public Shed(String id, double price, int capacity) {
+    Shed(String id, double price, int capacity) {
         super(id, price);
         this.capacity = capacity;
         hardwares = new ArrayList<>();
         quantity = new ArrayList<>();
     }
-    public int storeHardware(Hardware hardware, int quantity) throws CrowdedShed {
+    int storeHardware(Hardware hardware, int quantity) throws CrowdedShed {
         int q = 0;
         int stock;
         int returned = 0;
-        for (int i = 0; i < this.quantity.size(); i++){
-            q += this.quantity.get(i);
+        for (Integer integer : this.quantity) {
+            q += integer;
         }
         if (q == capacity){
             throw new CrowdedShed("Galpão Lotado");
@@ -54,7 +54,7 @@ public class Shed extends Infrastructure {
         quantity.clear();
     }
 
-    public boolean isCrowded(){
+    boolean isCrowded(){
         Iterator<Integer> it = quantity.iterator();
         int quantity = 0;
         while(it.hasNext()){

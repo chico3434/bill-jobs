@@ -13,8 +13,8 @@ import chico3434.billjobs.objects.Businessman;
 
 import java.text.NumberFormat;
 
-public class Transfer extends Stage {
-    public Transfer(Businessman businessman, Company company) {
+class Transfer extends Stage {
+    Transfer(Businessman businessman, Company company) {
 
         setTitle("Tranferência");
 

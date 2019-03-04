@@ -6,9 +6,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
-public class MonthlyReport extends Stage {
+class MonthlyReport extends Stage {
 
-    public MonthlyReport(String report) {
+    MonthlyReport(String report) {
         setTitle("Relatório Mensal");
 
         ScrollPane root = new ScrollPane();

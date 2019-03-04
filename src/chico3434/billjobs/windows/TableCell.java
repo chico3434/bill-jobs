@@ -16,7 +16,7 @@ public class TableCell extends HBox {
 
     private Button button1, button2;
 
-    public TableCell(String id, Label lbl, Button btn1, Button btn2){
+    TableCell(String id, Label lbl, Button btn1, Button btn2) {
         this.idComp = id;
         label = lbl;
         
@@ -34,9 +34,9 @@ public class TableCell extends HBox {
         this.getChildren().addAll(label, buttons);
     }
 
-    public void remove(){
+    /* public void remove(){
         this.setVisible(false);
-    }
+    } */
 
 
     @Override

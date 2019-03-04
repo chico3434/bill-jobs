@@ -62,7 +62,7 @@ public class Screen {
     private List<TableCell> cSheds = new ArrayList<>();
     private List<TableCell> cProducts = new ArrayList<>();
 
-    public static String buy;
+    static String buy;
 
     public void initialize(){
         // F11 para tecla cheia ativado
@@ -119,7 +119,7 @@ public class Screen {
         }
     }
 
-    public void updateCells(){
+    private void updateCells() {
         List<Server> servers = Game.getBusinessman().getCompany().getServers();
         for(Server s : servers){
             TableCell tc = new TableCell(s.getId(), createLabel(s.getId()), createButton("Usar", s), createButton("Vender", s));
@@ -137,7 +137,7 @@ public class Screen {
             }
         }
 
-        List<Shed> sheds = Game.getBusinessman().getCompany().getSheds();
+        List<Shed> sheds = Game.getBusinessman().getCompany().getShedList();
         for(Shed s : sheds){
             TableCell ct = new TableCell(s.getId(), createLabel(s.getId()), createButton("Usar", s), createButton("Vender", s));
             if (!cSheds.contains(ct)){
@@ -147,8 +147,8 @@ public class Screen {
         }
 
         List<Product> products = new ArrayList<>();
-        products.addAll(Game.getBusinessman().getCompany().getSoftwares());
-        products.addAll(Game.getBusinessman().getCompany().getHardwares());
+        products.addAll(Game.getBusinessman().getCompany().getSoftwareList());
+        products.addAll(Game.getBusinessman().getCompany().getHardwareList());
         for(TableCell c : cProducts){
             boxProducts.getChildren().remove(c);
         }
@@ -163,7 +163,7 @@ public class Screen {
         }
     }
 
-    public void updateData(){
+    private void updateData() {
         // Atualizando área monetária
         lblCompanyFunds.setText(Game.getFunds());
         lblBusinessmanMoney.setText(Game.getMoney());
@@ -175,59 +175,56 @@ public class Screen {
         updateCells();
     }
 
-    private Label createLabel(String string){
+    private Label createLabel(String string) {
         Label label = new Label(string);
 
         // Lógica para mostrar os detalhes deste chico3434.billjobs.objects no painel de detalhes
-        label.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                List<Infrastructure>  infrastructures = new ArrayList<>();
-                infrastructures.addAll(Game.getBusinessman().getCompany().getServers());
-                infrastructures.addAll(Game.getBusinessman().getCompany().getFactories());
-                infrastructures.addAll(Game.getBusinessman().getCompany().getSheds());
+        label.setOnMouseClicked(mouseEvent -> {
+            List<Infrastructure>  infrastructures = new ArrayList<>();
+            infrastructures.addAll(Game.getBusinessman().getCompany().getServers());
+            infrastructures.addAll(Game.getBusinessman().getCompany().getFactories());
+            infrastructures.addAll(Game.getBusinessman().getCompany().getShedList());
 
-                if (infrastructures.contains(new Infrastructure(string))){
-                    Infrastructure i = infrastructures.get(infrastructures.indexOf(new Infrastructure(string)));
+            if (infrastructures.contains(new Infrastructure(string))){
+                Infrastructure i = infrastructures.get(infrastructures.indexOf(new Infrastructure(string)));
 
-                    String info = null;
+                String info = null;
 
-                    if (i instanceof Server){
-                        Server s = (Server) i;
-                        info = s.getType();
-                        info += "\nId: " + s.getId() +
-                                "\nPreço: " + s.getPrice() +
-                                "\nCapacidade: " + s.getCapacity();
-                    } else if (i instanceof Factory){
-                        Factory f = (Factory) i;
-                        info = f.getType();
-                        info += "\nId: " + f.getId() +
-                                "\nPreço: " + f.getPrice() +
-                                "\nPotencial: " + f.getPotential() +
-                                "\nNível: " + f.getLevel();
-                    } else if (i instanceof Shed){
-                        Shed g = (Shed) i;
-                        info = g.getType();
-                        info += "\nId: " + g.getId() +
-                                "\nPreço: " + g.getPrice() +
-                                "\nCapacidade: " + g.getCapacity();
-                    }
-
-                    lblDetails.setText(info);
-                    return;
+                if (i instanceof Server){
+                    Server s = (Server) i;
+                    info = s.getType();
+                    info += "\nId: " + s.getId() +
+                            "\nPreço: " + s.getPrice() +
+                            "\nCapacidade: " + s.getCapacity();
+                } else if (i instanceof Factory){
+                    Factory f = (Factory) i;
+                    info = f.getType();
+                    info += "\nId: " + f.getId() +
+                            "\nPreço: " + f.getPrice() +
+                            "\nPotencial: " + f.getPotential() +
+                            "\nNível: " + f.getLevel();
+                } else if (i instanceof Shed){
+                    Shed g = (Shed) i;
+                    info = g.getType();
+                    info += "\nId: " + g.getId() +
+                            "\nPreço: " + g.getPrice() +
+                            "\nCapacidade: " + g.getCapacity();
                 }
 
-                List<Product> products = new ArrayList<>();
-                products.addAll(Game.getBusinessman().getCompany().getSoftwares());
-                products.addAll(Game.getBusinessman().getCompany().getHardwares());
+                lblDetails.setText(info);
+                return;
+            }
 
-                if (products.contains(new Product(string, ""))){
-                    Product p = products.get(products.indexOf(new Product(string, "")));
-                    String info = "Product\nId: " + p.getId() + "\nNome: " + p.getName() + "\nVersão: " + p.getVersion() +
-                            "\nDescrição: " + p.getDescription() + "\nPreço: " + p.getPrice() + "\nCusto: " + p.getCost();
+            List<Product> products = new ArrayList<>();
+            products.addAll(Game.getBusinessman().getCompany().getSoftwareList());
+            products.addAll(Game.getBusinessman().getCompany().getHardwareList());
 
-                    lblDetails.setText(info);
-                }
+            if (products.contains(new Product(string, ""))){
+                Product p = products.get(products.indexOf(new Product(string, "")));
+                String info = "Product\nId: " + p.getId() + "\nNome: " + p.getName() + "\nVersão: " + p.getVersion() +
+                        "\nDescrição: " + p.getDescription() + "\nPreço: " + p.getPrice() + "\nCusto: " + p.getCost();
+
+                lblDetails.setText(info);
             }
         });
         return label;
@@ -236,67 +233,74 @@ public class Screen {
     private Button createButton(String string, Object o){
         Button button = new Button(string);
         button.setOnAction((e) -> {
-            if (string.equals("Usar")){
-                Infrastructure i = (Infrastructure) o;
-                if (i instanceof Server){
-                    Server s = (Server) i;
-                    UseServer us = new UseServer(s);
-                    us.showAndWait();
-                } else if (i instanceof Factory){
-                    Factory f = (Factory) i;
-                    UseFactory uf = new UseFactory(f);
-                    uf.showAndWait();
-                } else if (i instanceof Shed) {
-                    Shed g = (Shed) i;
-                    UseShed us = new UseShed(g);
-                    us.showAndWait();
-                } else {
-                    new Alert(Alert.AlertType.WARNING, "Função ainda não implementada").show();
-                }
-            } else if (string.equals("Remover")){
-
-                if (o instanceof Product) {
-                    Product p = (Product) o;
-                    if (p instanceof Software){
-                        Software s = (Software) p;
-                        Game.getBusinessman().getCompany().removeSoftware(s);
-                        TableCell tc = cProducts.get(cProducts.indexOf(new TableCell(s.getId(), new Label(), new Button(), new Button())));
-                        cProducts.remove(tc);
-                        boxProducts.getChildren().removeAll(tc);
-                    } else if (p instanceof Hardware){
-                        Hardware h = (Hardware) p;
-                        Game.getBusinessman().getCompany().removeHardware(h);
-                        TableCell ct = cProducts.get(cProducts.indexOf(new TableCell(h.getId(), new Label(), new Button(), new Button())));
-                        cProducts.remove(ct);
-                        boxProducts.getChildren().removeAll(ct);
+            switch (string) {
+                case "Usar": {
+                    Infrastructure i = (Infrastructure) o;
+                    if (i instanceof Server) {
+                        Server s = (Server) i;
+                        UseServer us = new UseServer(s);
+                        us.showAndWait();
+                    } else if (i instanceof Factory) {
+                        Factory f = (Factory) i;
+                        UseFactory uf = new UseFactory(f);
+                        uf.showAndWait();
+                    } else if (i instanceof Shed) {
+                        Shed g = (Shed) i;
+                        UseShed us = new UseShed(g);
+                        us.showAndWait();
+                    } else {
+                        new Alert(Alert.AlertType.WARNING, "Função ainda não implementada").show();
                     }
+                    break;
                 }
-                updateData();
-            } else if (string.equals("Vender")){
-                Infrastructure i = (Infrastructure) o;
-                if (i instanceof Server){
-                    TableCell tc = cServers.get(cServers.indexOf(new TableCell(i.getId(), new Label(), new Button(), new Button())));
-                    cServers.remove(tc);
-                    boxServers.getChildren().removeAll(tc);
-                    Game.getBusinessman().getCompany().buyServer((Server) i);
-                } else if (i instanceof Factory){
-                    TableCell ct = cFactories.get(cFactories.indexOf(new TableCell(i.getId(), new Label(), new Button(), new Button())));
-                    cFactories.remove(ct);
-                    boxFactories.getChildren().removeAll(ct);
-                    Game.getBusinessman().getCompany().buyFactory((Factory) i);
-                } else if (i instanceof Shed){
-                    TableCell ct = cSheds.get(cSheds.indexOf(new TableCell(i.getId(), new Label(), new Button(), new Button())));
-                    cSheds.remove(ct);
-                    boxSheds.getChildren().removeAll(ct);
-                    Game.getBusinessman().getCompany().buyShed((Shed) i);
+                case "Remover":
+
+                    if (o instanceof Product) {
+                        Product p = (Product) o;
+                        if (p instanceof Software) {
+                            Software s = (Software) p;
+                            Game.getBusinessman().getCompany().removeSoftware(s);
+                            TableCell tc = cProducts.get(cProducts.indexOf(new TableCell(s.getId(), new Label(), new Button(), new Button())));
+                            cProducts.remove(tc);
+                            boxProducts.getChildren().removeAll(tc);
+                        } else if (p instanceof Hardware) {
+                            Hardware h = (Hardware) p;
+                            Game.getBusinessman().getCompany().removeHardware(h);
+                            TableCell ct = cProducts.get(cProducts.indexOf(new TableCell(h.getId(), new Label(), new Button(), new Button())));
+                            cProducts.remove(ct);
+                            boxProducts.getChildren().removeAll(ct);
+                        }
+                    }
+                    updateData();
+                    break;
+                case "Vender": {
+                    Infrastructure i = (Infrastructure) o;
+                    if (i instanceof Server) {
+                        TableCell tc = cServers.get(cServers.indexOf(new TableCell(i.getId(), new Label(), new Button(), new Button())));
+                        cServers.remove(tc);
+                        boxServers.getChildren().removeAll(tc);
+                        Game.getBusinessman().getCompany().sellServer((Server) i);
+                    } else if (i instanceof Factory) {
+                        TableCell ct = cFactories.get(cFactories.indexOf(new TableCell(i.getId(), new Label(), new Button(), new Button())));
+                        cFactories.remove(ct);
+                        boxFactories.getChildren().removeAll(ct);
+                        Game.getBusinessman().getCompany().sellFactory((Factory) i);
+                    } else if (i instanceof Shed) {
+                        TableCell ct = cSheds.get(cSheds.indexOf(new TableCell(i.getId(), new Label(), new Button(), new Button())));
+                        cSheds.remove(ct);
+                        boxSheds.getChildren().removeAll(ct);
+                        Game.getBusinessman().getCompany().sellShed((Shed) i);
+                    }
+                    updateData();
+                    break;
                 }
-                updateData();
-            } else if(string.equals("Editar")) {
-            	//new Alert(Alert.AlertType.WARNING, "Função ainda não implementada").show();
-                Product p = (Product) o;
-                CreateOrEditProduct cep = new CreateOrEditProduct(p);
-                cep.showAndWait();
-                updateData();
+                case "Editar":
+                    //new Alert(Alert.AlertType.WARNING, "Função ainda não implementada").show();
+                    Product p = (Product) o;
+                    CreateOrEditProduct cep = new CreateOrEditProduct(p);
+                    cep.showAndWait();
+                    updateData();
+                    break;
             }
         });
         return button;
@@ -387,7 +391,7 @@ public class Screen {
     }
     
     public void showHowToPlay(ActionEvent actionEvent) {
-        HowToPlay cj = new HowToPlay();
-        cj.showAndWait();
+        HowToPlay howToPlay = new HowToPlay();
+        howToPlay.showAndWait();
     }
 }

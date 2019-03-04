@@ -8,7 +8,7 @@ public class Product {
     private double price;
     private double cost;
 
-    public Product(String name, String version, String description, double cost, double price) {
+    Product(String name, String version, String description, double cost, double price) {
         this.name = name;
         this.version = version;
         this.description = description;
@@ -24,7 +24,7 @@ public class Product {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Product) || o == null) return false;
+        if (!(o instanceof Product)) return false;
         Product product = (Product) o;
         return getId().equals(product.getId());
     }
@@ -53,7 +53,7 @@ public class Product {
         return description;
     }
 
-    public void setDescription(String description) {
+    void setDescription(String description) {
         this.description = description;
     }
 
@@ -69,7 +69,7 @@ public class Product {
         return cost;
     }
 
-    public void setCost(double cost) {
+    void setCost(double cost) {
         this.cost = cost;
     }
 }

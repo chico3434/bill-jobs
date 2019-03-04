@@ -16,11 +16,11 @@ import chico3434.billjobs.utils.Game;
 import java.util.Iterator;
 import java.util.List;
 
-public class UseServer extends Stage {
+class UseServer extends Stage {
 
     private Server server;
 
-    public UseServer(Server server){
+    UseServer(Server server){
 
         this.server = server;
 
@@ -40,11 +40,9 @@ public class UseServer extends Stage {
 
         int rows = 1;
 
-        List<Software> soft = server.getSoftwares();
-        Iterator<Software> it = soft.iterator();
+        List<Software> softwareList = server.getSoftwareList();
 
-        while(it.hasNext()){
-            Software software = it.next();
+        for (Software software : softwareList) {
             root.addRow(rows, new Label(software.getId()), createButton("Trocar", software));
             rows++;
         }
@@ -58,7 +56,7 @@ public class UseServer extends Stage {
 
     }
 
-    private Node createButton(String action, Software software){
+    private Node createButton(String action, Software software) {
         Button btn = new Button(action);
 
         btn.setOnAction((e)->{
@@ -77,7 +75,7 @@ public class UseServer extends Stage {
                     new Alert(Alert.AlertType.ERROR, ex.getMessage()).show();
                 }
 
-            } else if (action.equals("Add em Todos")){
+            } else if (action.equals("Add em Todos")) {
                 TextInputDialog tid = new TextInputDialog();
                 tid.setTitle("Software a ser hospedado");
                 tid.setContentText("Digite o id do Software que você deseja\nhospedar em todos os slots deste server: ");

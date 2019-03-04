@@ -89,15 +89,15 @@ public class Game {
     }
 
     public static void buyServer(double price, int capacity) throws MissingFunds {
-        businessman.getCompany().buyServer(price, capacity);
+        businessman.getCompany().sellServer(price, capacity);
     }
 
     public static void buyFactory(double price, int potential, int level) throws MissingFunds {
-        businessman.getCompany().buyFactory(price, potential, level);
+        businessman.getCompany().sellFactory(price, potential, level);
     }
 
     public static void buyShed(double price, int capacity) throws MissingFunds {
-        businessman.getCompany().buyShed(price, capacity);
+        businessman.getCompany().sellShed(price, capacity);
     }
 
     public static void createSoftware(String name, String version, String description, double cost, double price) throws MissingFunds, ExistingProduct {
@@ -118,8 +118,8 @@ public class Game {
     
     // Host Software in a Server Slot
     public static void hostSoftware(Server server, String softwareId) throws Exception {
-        if (businessman.getCompany().getSoftwares().contains(new Software(softwareId, ""))) {
-            Software s = businessman.getCompany().getSoftwares().get(businessman.getCompany().getSoftwares().indexOf(new Software(softwareId, "")));
+        if (businessman.getCompany().getSoftwareList().contains(new Software(softwareId, ""))) {
+            Software s = businessman.getCompany().getSoftwareList().get(businessman.getCompany().getSoftwareList().indexOf(new Software(softwareId, "")));
             server.hostSoftware(s);
         } else {
             throw new ExistingProduct("Software não existe!");
@@ -128,8 +128,8 @@ public class Game {
 
     //Host Software in all Server Slots
     public static void hostSoftwareInAll(Server server, String softwareId) throws Exception {
-        if (businessman.getCompany().getSoftwares().contains(new Software(softwareId, ""))) {
-        	Software s = businessman.getCompany().getSoftwares().get(businessman.getCompany().getSoftwares().indexOf(new Software(softwareId, "")));
+        if (businessman.getCompany().getSoftwareList().contains(new Software(softwareId, ""))) {
+        	Software s = businessman.getCompany().getSoftwareList().get(businessman.getCompany().getSoftwareList().indexOf(new Software(softwareId, "")));
             server.hostSoftwareInAll(s);
         } else {
             throw new ExistingProduct("Software não existe!");
@@ -138,8 +138,8 @@ public class Game {
     
     // Exchange a software for another in a Server Slot
     public static void exchangeSoftware(Server server, String softwareId, Software software) throws Exception {
-        if (businessman.getCompany().getSoftwares().contains(new Software(softwareId, ""))) {
-            Software s = businessman.getCompany().getSoftwares().get(businessman.getCompany().getSoftwares().indexOf(new Software(softwareId, "")));
+        if (businessman.getCompany().getSoftwareList().contains(new Software(softwareId, ""))) {
+            Software s = businessman.getCompany().getSoftwareList().get(businessman.getCompany().getSoftwareList().indexOf(new Software(softwareId, "")));
             server.exchangeSoftware(s, software);
         } else {
             throw new ExistingProduct("Software não existe!");
@@ -148,8 +148,8 @@ public class Game {
 
     //Allocate hardware in a Factory so it can be produced over time
     public static void allocateHardwareInFactory(Factory factory, String hardwareId) throws Exception {
-        if (businessman.getCompany().getHardwares().contains(new Hardware(hardwareId, ""))){
-            Hardware h = businessman.getCompany().getHardwares().get(businessman.getCompany().getHardwares().indexOf(new Hardware(hardwareId, "")));
+        if (businessman.getCompany().getHardwareList().contains(new Hardware(hardwareId, ""))){
+            Hardware h = businessman.getCompany().getHardwareList().get(businessman.getCompany().getHardwareList().indexOf(new Hardware(hardwareId, "")));
             factory.setProduct(h);
         } else {
             throw new ExistingProduct("Hardware não existe!");
@@ -161,13 +161,13 @@ public class Game {
         time++;
 
         // Buy Softwares
-        businessman.getCompany().buySoftwares();
+        businessman.getCompany().sellSoftware();
 
         // Manufacture and stock hardware
         businessman.getCompany().manufactureHardware();
         
         // Buy Hardwares
-        businessman.getCompany().buyHardware();
+        businessman.getCompany().sellHardware();
         
         // Tempo precisa estar na classe Businessman (para poder ser salvo) para poder ser mostrado na chico3434.billjobs.windows
         System.out.println("Tempo: " + time);

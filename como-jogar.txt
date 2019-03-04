@@ -25,16 +25,16 @@ Possui como infraestruturas a Fábrica e o Galpão.
 O cost dele é debitado a cada unidade produzida, não é debitada nenhuma quantia na criação de um hardware.
 
 O jogo possui infraestruturas que te possibilitam efetuar as vendas dos seus products, sendo eles:
--Servidor: Servidor é uma estrutura exclusiva de softwares, que possui um número de espaço de armazenamento.
+-Servidor: Servidor é uma estrutura exclusiva de softwareList, que possui um número de espaço de armazenamento.
 Em cada espaço é possível alocar um software, é possível alocar o mesmo software em mais de um (quantos você quiser) espaço de armazenamento de um mesmo server.
 Um software só é vendido se estiver alocado em pelo menos um espaço de armazenamento de server, quanto mais espaços ele ocupar, mais ele será vendido, pois quanto maior espaço de armazenamento de um software, melhor é a sua qualidade.
 
--Fábrica: A fábrica é um estrutura exclusiva de hardwares, que possui a capacity de produzir somente um tipo de hardware.
-A fábrica possui níveis, que são o quão complexo os hardwares podem ser para ela produzir, a complexidade do hardware é maior, quando seu cost for maior.
-Uma fábrica de nível 1, produz hardwares com cost de até R$100,00. Se for de nível 2, produz hardwares com cost de R$200,00, e assim por diante.
+-Fábrica: A fábrica é um estrutura exclusiva de hardwareList, que possui a capacity de produzir somente um tipo de hardware.
+A fábrica possui níveis, que são o quão complexo os hardwareList podem ser para ela produzir, a complexidade do hardware é maior, quando seu cost for maior.
+Uma fábrica de nível 1, produz hardwareList com cost de até R$100,00. Se for de nível 2, produz hardwareList com cost de R$200,00, e assim por diante.
 As fábricas possuem um potential, que é o quanto ela consegue produzir funcionando em 100%. Em um mês podem ser produzidos 100%, 75%, 50%, 25%, 0% do potential. E isto depende primeiramente de condições aleatórias e segundamente de condições financeiras, se sua company não tiver funds para produzir algum product ele não será produzido.
 
--Galpões: Os galpões são estruturas onde são armazenados os hardwares e vendidos.
+-Galpões: Os galpões são estruturas onde são armazenados os hardwareList e vendidos.
 Ao ser produzido em uma fábrica um hardware é automaticamente levado a um galpão, e depois de armazenado é possível ser vendido.
 Os galpões possuem capacity, se um galpão lotar as fábricas tentaram armazenar os products em outro galpão, porém se todos os galpões lotarem a produção não armazenada é perdida e as fábricas param com suas atividades.
 
@@ -43,7 +43,7 @@ O jogo possui uma interface que te possibilite comprar infraestruturas, criar pr
 É possível comprar uma infrastructure clicando no botão Comprar que fica ao lado das infraestruturas.
 
 É possível usar uma infrastructure clicando no botão Usar que fica ao lado da infrastructure.
-Para servers o Usar serve para alocar um ou mais softwares nele.
+Para servers o Usar serve para alocar um ou mais softwareList nele.
 Para fábricas o Usar serve para alocar um hardware nela.
 Para galpões o Usar serve para ver os products armazenados nele e removê-los dele.
 
@@ -57,7 +57,7 @@ Os detalhes aparecem na parte "Detalhes" da tela.
 É possível Tranferir money entre você e sua company e entre sua company e você clicando no botão Tranferir ou Receber.
 
 É possível avançar um mês clicando no botão Passar o tempo
-Quando você passa o tempo, softwares hospedados em servers são vendidos, hardwares são produzidos nas suas fábricas e armazenados nos galpões e depois são vendidos.
+Quando você passa o tempo, softwareList hospedados em servers são vendidos, hardwareList são produzidos nas suas fábricas e armazenados nos galpões e depois são vendidos.
 Toda essa operação gera débitos e créditos na funds da sua company, o Relatório Mensal, mostra todos os acontecimentos da sua company no mês que se passou.
 
 É possível salvar os dados de seu empresário clicando no Menu Jogo e depois no sub-menu Salvar.

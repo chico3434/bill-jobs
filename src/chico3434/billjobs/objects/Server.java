@@ -8,39 +8,39 @@ import java.util.List;
 public class Server extends Infrastructure {
 
     private int capacity;
-    List<Software> softwares;
+    private List<Software> softwareList;
 
-    public Server(String id, double price, int capacity) {
+    Server(String id, double price, int capacity) {
         super(id, price);
         this.capacity = capacity;
-        softwares = new ArrayList<>();
+        softwareList = new ArrayList<>();
     }
 
     public void hostSoftware(Software software) throws CrowdedServer {
-        if (softwares.size() < capacity){
-            softwares.add(software);
+        if (softwareList.size() < capacity){
+            softwareList.add(software);
         } else {
             throw new CrowdedServer("Server Lotado");
         }
     }
 
     public void hostSoftwareInAll(Software software) {
-        softwares.clear();
+        softwareList.clear();
         for (int i = 0; i < capacity; i++){
-            softwares.add(software);
+            softwareList.add(software);
         }
     }
 
     public void exchangeSoftware(Software s, Software s1) {
-        softwares.remove(softwares.indexOf(s1));
-        softwares.add(s);
+        softwareList.remove(softwareList.get(softwareList.indexOf(s1)));
+        softwareList.add(s);
     }
 
     @Override
     public String toString() {
         return "Server{" +
                 "capacity=" + capacity +
-                ", softwares=" + softwares +
+                ", softwareList=" + softwareList +
                 '}';
     }
 
@@ -56,11 +56,11 @@ public class Server extends Infrastructure {
         this.capacity = capacity;
     }
 
-    public List<Software> getSoftwares() {
-        return softwares;
+    public List<Software> getSoftwareList() {
+        return softwareList;
     }
 
-    public void setSoftwares(List<Software> softwares) {
-        this.softwares = softwares;
+    public void setSoftwareList(List<Software> softwareList) {
+        this.softwareList = softwareList;
     }
 }

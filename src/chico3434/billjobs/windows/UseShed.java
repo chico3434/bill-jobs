@@ -9,11 +9,11 @@ import javafx.stage.Stage;
 import chico3434.billjobs.objects.Shed;
 import chico3434.billjobs.objects.Hardware;
 
-public class UseShed extends Stage {
+class UseShed extends Stage {
 
     private Shed shed;
 
-    public UseShed(Shed shed) {
+    UseShed(Shed shed) {
 
         this.shed = shed;
 

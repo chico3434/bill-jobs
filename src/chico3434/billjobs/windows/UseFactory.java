@@ -10,9 +10,9 @@ import javafx.stage.Stage;
 import chico3434.billjobs.objects.Factory;
 import chico3434.billjobs.utils.Game;
 
-public class UseFactory extends Stage {
+class UseFactory extends Stage {
 
-    public UseFactory(Factory factory) {
+    UseFactory(Factory factory) {
 
         setTitle("Usar Fábrica");
 

@@ -10,21 +10,21 @@ public class Factory extends Infrastructure {
     private int potential;
     private Hardware product;
 
-    public Factory(String id, double preco, int potential, int level) {
-        super(id, preco);
+    Factory(String id, double price, int potential, int level) {
+        super(id, price);
         this.potential = potential;
         this.level = level;
     }
 
-    public int manufacture(){
+    int manufacture(){
         Random random = new Random();
 
-        int perc = 1 + random.nextInt(4);
+        int percent = 1 + random.nextInt(4);
 
-        return (potential /4) * perc;
+        return (potential /4) * percent;
     }
 
-    public int manufacture(int i){
+    int manufacture(int i){
         return (potential /4)*i;
     }
 
@@ -59,7 +59,7 @@ public class Factory extends Infrastructure {
         this.product = product;
     }
 
-    public void removeProduct(){
+    void removeProduct(){
         this.product = null;
     }
 }

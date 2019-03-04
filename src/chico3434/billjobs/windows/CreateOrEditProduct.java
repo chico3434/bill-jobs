@@ -13,11 +13,9 @@ import chico3434.billjobs.objects.Product;
 import chico3434.billjobs.objects.Software;
 import chico3434.billjobs.utils.Game;
 
-public class CreateOrEditProduct extends Stage {
+class CreateOrEditProduct extends Stage {
 
     private VBox vBox;
-
-    private Label lblName, lblVersion, lblDescription, lblCost, lblPrice, lblType, lblSoft, lblHard;
 
     private TextField inName;
 
@@ -28,8 +26,6 @@ public class CreateOrEditProduct extends Stage {
     private TextField inCost;
 
     private TextField inPrice;
-
-    private ToggleGroup types;
 
     private RadioButton radioSoft;
 
@@ -57,25 +53,25 @@ public class CreateOrEditProduct extends Stage {
         setScene(scene);
     }
 
-    private void build(){
+    private void build() {
 
         vBox = new VBox();
 
-        lblName = new Label("Nome");
+        Label lblName = new Label("Nome");
 
-        lblVersion = new Label("Versão");
+        Label lblVersion = new Label("Versão");
 
-        lblDescription = new Label("Descrição");
+        Label lblDescription = new Label("Descrição");
 
-        lblCost = new Label("Custo");
+        Label lblCost = new Label("Custo");
 
-        lblPrice = new Label("Preço");
+        Label lblPrice = new Label("Preço");
 
-        lblType = new Label("Tipo");
+        Label lblType = new Label("Tipo");
 
-        lblSoft = new Label("Software");
+        Label lblSoft = new Label("Software");
 
-        lblHard = new Label("Hardware");
+        Label lblHard = new Label("Hardware");
 
         inName = new TextField();
 
@@ -87,7 +83,7 @@ public class CreateOrEditProduct extends Stage {
 
         inPrice = new TextField("0");
 
-        types = new ToggleGroup();
+        ToggleGroup types = new ToggleGroup();
 
         radioSoft = new RadioButton();
 

@@ -13,7 +13,7 @@ public class Hardware extends Product {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Hardware) || o == null) return false;
+        if (!(o instanceof Hardware)) return false;
         Hardware hardware = (Hardware) o;
         return getId().equals(hardware.getId());
     }

@@ -8,10 +8,10 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static Stage initial;
-    public static Stage screen;
-    public static Stage createCompany;
-    public static Stage buy;
+    static Stage initial;
+    static Stage screen;
+    static Stage createCompany;
+    static Stage buy;
 
     @Override
     public void start(Stage stage) throws Exception {

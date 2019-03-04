@@ -7,9 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.stage.Stage;
 
-public class HowToPlay extends Stage{
+class HowToPlay extends Stage{
 	
-	String howToPlay = "O jogo Bill Jobs: Money Machine tem como objetivo a acumulação máxima de capital provindos de vendas de produtos tecnológicos.\n" +
+	private String howToPlay = "O jogo Bill Jobs: Money Machine tem como objetivo a acumulação máxima de capital provindos de vendas de produtos tecnológicos.\n" +
 			"\n" + 
 			"Todo produto tem:\n" + 
 			"-Nome: Nome escolhido por você ao seu produto.\n" + 
@@ -77,7 +77,7 @@ public class HowToPlay extends Stage{
 			"É possível ver o Como Jogar clicando no Menu Ajuda e depois no sub-menu Como Jogar.\n" + 
 			"";
 	
-	public HowToPlay() {
+	HowToPlay() {
 		setTitle("Como Jogar");
 		
 		ScrollPane panel = new ScrollPane();

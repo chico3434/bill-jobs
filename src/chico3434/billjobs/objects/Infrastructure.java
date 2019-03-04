@@ -5,7 +5,7 @@ public class Infrastructure {
     private String id;
     private double price;
 
-    public Infrastructure(String id, double price) {
+    Infrastructure(String id, double price) {
         this.id = id;
         this.price = price;
     }
