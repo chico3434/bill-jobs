@@ -1,7 +1,6 @@
 package chico3434.billjobs.windows;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -57,10 +55,10 @@ public class Screen {
     @FXML
     private VBox boxProducts;
 
-    private List<TableCell> cServers = new ArrayList<>();
-    private List<TableCell> cFactories = new ArrayList<>();
-    private List<TableCell> cSheds = new ArrayList<>();
-    private List<TableCell> cProducts = new ArrayList<>();
+    private List<TableCell> serverTableCellList = new ArrayList<>();
+    private List<TableCell> factoryTableCellList = new ArrayList<>();
+    private List<TableCell> shedTableCellList = new ArrayList<>();
+    private List<TableCell> productTableCellList = new ArrayList<>();
 
     static String buy;
 
@@ -119,44 +117,41 @@ public class Screen {
         }
     }
 
+    private void updateInfrastructureCell(String id, Button use, Button sell, List<TableCell> tableCells, VBox vBox) {
+        TableCell tableCell = new TableCell(id, createLabel(id), use, sell);
+        if (!tableCells.contains(tableCell)) {
+            tableCells.add(tableCell);
+            vBox.getChildren().add(tableCell);
+        }
+    }
+
     private void updateCells() {
         List<Server> servers = Game.getBusinessman().getCompany().getServers();
-        for(Server s : servers){
-            TableCell tc = new TableCell(s.getId(), createLabel(s.getId()), createButton("Usar", s), createButton("Vender", s));
-            if (!cServers.contains(tc)){
-                cServers.add(tc);
-                boxServers.getChildren().add(tc);
-            }
+        for (Server server : servers) {
+            updateInfrastructureCell(server.getId(), createButton("Usar", server), createButton("Vender", server), serverTableCellList, boxServers);
         }
+
         List<Factory> factories = Game.getBusinessman().getCompany().getFactories();
-        for(Factory f : factories){
-            TableCell ct = new TableCell(f.getId(), createLabel(f.getId()), createButton("Usar", f), createButton("Vender", f));
-            if (!cFactories.contains(ct)){
-                cFactories.add(ct);
-                boxFactories.getChildren().add(ct);
-            }
+        for(Factory factory : factories){
+            updateInfrastructureCell(factory.getId(), createButton("Usar", factory), createButton("Vender", factory), factoryTableCellList, boxFactories);
         }
 
         List<Shed> sheds = Game.getBusinessman().getCompany().getShedList();
-        for(Shed s : sheds){
-            TableCell ct = new TableCell(s.getId(), createLabel(s.getId()), createButton("Usar", s), createButton("Vender", s));
-            if (!cSheds.contains(ct)){
-                cSheds.add(ct);
-                boxSheds.getChildren().add(ct);
-            }
+        for(Shed shed : sheds){
+            updateInfrastructureCell(shed.getId(), createButton("Usar", shed), createButton("Vender", shed), shedTableCellList, boxSheds);
         }
 
         List<Product> products = new ArrayList<>();
         products.addAll(Game.getBusinessman().getCompany().getSoftwareList());
         products.addAll(Game.getBusinessman().getCompany().getHardwareList());
-        for(TableCell c : cProducts){
-            boxProducts.getChildren().remove(c);
+        for(TableCell tableCell : productTableCellList){
+            boxProducts.getChildren().remove(tableCell);
         }
-        cProducts.clear();
+        productTableCellList.clear();
         for(Product p : products){
             TableCell ct = new TableCell(p.getId(), createLabel(p.getId()), createButton("Editar", p), createButton("Remover", p));
-            if (!cProducts.contains(ct)){
-                cProducts.add(ct);
+            if (!productTableCellList.contains(ct)){
+                productTableCellList.add(ct);
                 boxProducts.getChildren().add(ct);
                 boxProducts.getChildren();
             }
@@ -256,40 +251,30 @@ public class Screen {
                 case "Remover":
 
                     if (o instanceof Product) {
-                        Product p = (Product) o;
-                        if (p instanceof Software) {
-                            Software s = (Software) p;
-                            Game.getBusinessman().getCompany().removeSoftware(s);
-                            TableCell tc = cProducts.get(cProducts.indexOf(new TableCell(s.getId(), new Label(), new Button(), new Button())));
-                            cProducts.remove(tc);
-                            boxProducts.getChildren().removeAll(tc);
-                        } else if (p instanceof Hardware) {
-                            Hardware h = (Hardware) p;
-                            Game.getBusinessman().getCompany().removeHardware(h);
-                            TableCell ct = cProducts.get(cProducts.indexOf(new TableCell(h.getId(), new Label(), new Button(), new Button())));
-                            cProducts.remove(ct);
-                            boxProducts.getChildren().removeAll(ct);
+                        Product product = (Product) o;
+                        if (product instanceof Software) {
+                            Software software = (Software) product;
+                            Game.getBusinessman().getCompany().removeSoftware(software);
+                            removeTableCell(software.getId());
+                        } else if (product instanceof Hardware) {
+                            Hardware hardware = (Hardware) product;
+                            Game.getBusinessman().getCompany().removeHardware(hardware);
+                            removeTableCell(hardware.getId());
                         }
                     }
                     updateData();
                     break;
                 case "Vender": {
-                    Infrastructure i = (Infrastructure) o;
-                    if (i instanceof Server) {
-                        TableCell tc = cServers.get(cServers.indexOf(new TableCell(i.getId(), new Label(), new Button(), new Button())));
-                        cServers.remove(tc);
-                        boxServers.getChildren().removeAll(tc);
-                        Game.getBusinessman().getCompany().sellServer((Server) i);
-                    } else if (i instanceof Factory) {
-                        TableCell ct = cFactories.get(cFactories.indexOf(new TableCell(i.getId(), new Label(), new Button(), new Button())));
-                        cFactories.remove(ct);
-                        boxFactories.getChildren().removeAll(ct);
-                        Game.getBusinessman().getCompany().sellFactory((Factory) i);
-                    } else if (i instanceof Shed) {
-                        TableCell ct = cSheds.get(cSheds.indexOf(new TableCell(i.getId(), new Label(), new Button(), new Button())));
-                        cSheds.remove(ct);
-                        boxSheds.getChildren().removeAll(ct);
-                        Game.getBusinessman().getCompany().sellShed((Shed) i);
+                    Infrastructure infrastructure = (Infrastructure) o;
+                    if (infrastructure instanceof Server) {
+                        removeInfrastructure(infrastructure, serverTableCellList, boxServers);
+                        Game.getBusinessman().getCompany().sellServer((Server) infrastructure);
+                    } else if (infrastructure instanceof Factory) {
+                        removeInfrastructure(infrastructure, factoryTableCellList, boxFactories);
+                        Game.getBusinessman().getCompany().sellFactory((Factory) infrastructure);
+                    } else if (infrastructure instanceof Shed) {
+                        removeInfrastructure(infrastructure, shedTableCellList, boxSheds);
+                        Game.getBusinessman().getCompany().sellShed((Shed) infrastructure);
                     }
                     updateData();
                     break;
@@ -306,25 +291,30 @@ public class Screen {
         return button;
     }
 
+    private void removeInfrastructure(Infrastructure infrastructure, List<TableCell> tableCellList, VBox vBox) {
+        TableCell tableCell = tableCellList.get(tableCellList.indexOf(new TableCell(infrastructure.getId(), new Label(), new Button(), new Button())));
+        tableCellList.remove(tableCell);
+        vBox.getChildren().removeAll(tableCell);
+    }
+
+    private void removeTableCell(String id) {
+        TableCell tableCell = productTableCellList.get(productTableCellList.indexOf(new TableCell(id, new Label(), new Button(), new Button())));
+        productTableCellList.remove(tableCell);
+        boxProducts.getChildren().removeAll(tableCell);
+    }
+
     public void exitGame(ActionEvent actionEvent) {
         System.exit(0);
     }
 
     public void showAbout(ActionEvent actionEvent) {
-        new Alert(Alert.AlertType.INFORMATION, "Game para ganhar 2 pontos em Java").show();
+        new Alert(Alert.AlertType.INFORMATION, "Jogo para ganhar 2 pontos em Java").show();
     }
 
     public void buyServer(ActionEvent actionEvent) {
         try {
             buy = "Server";
-            Main.buy = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/buy.fxml"));
-            Main.buy.setTitle("Buy " + buy);
-            Main.buy.setScene(new Scene(root, 300, 125));
-            Main.buy.showAndWait();
-
-            buy = null;
-            updateData();
+            openWindow();
         } catch (IOException e) {
             System.out.println("Erro em " + e);
             e.printStackTrace();
@@ -332,17 +322,21 @@ public class Screen {
 
     }
 
+    private void openWindow() throws IOException {
+        Main.buy = new Stage();
+        Parent root = FXMLLoader.load(getClass().getResource("fxml/buy.fxml"));
+        Main.buy.setTitle("Buy " + buy);
+        Main.buy.setScene(new Scene(root, 300, 125));
+        Main.buy.showAndWait();
+
+        buy = null;
+        updateData();
+    }
+
     public void buyFactory(ActionEvent actionEvent) {
         try{
             buy = "Fábrica";
-            Main.buy = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/buy.fxml"));
-            Main.buy.setTitle("Buy " + buy);
-            Main.buy.setScene(new Scene(root, 300, 125));
-            Main.buy.showAndWait();
-
-            buy = null;
-            updateData();
+            openWindow();
         } catch (IOException e) {
             System.out.println("Erro em " + e);
             e.printStackTrace();
@@ -352,14 +346,7 @@ public class Screen {
     public void buyShed(ActionEvent actionEvent) {
         try{
             buy = "Galpão";
-            Main.buy = new Stage();
-            Parent root = FXMLLoader.load(getClass().getResource("fxml/buy.fxml"));
-            Main.buy.setTitle("Buy " + buy);
-            Main.buy.setScene(new Scene(root, 300, 125));
-            Main.buy.showAndWait();
-
-            buy = null;
-            updateData();
+            openWindow();
         } catch (IOException e) {
             System.out.println("Erro em " + e);
             e.printStackTrace();
@@ -373,8 +360,8 @@ public class Screen {
     }
 
     public void transferOrReceive(ActionEvent actionEvent) {
-        Transfer t = new Transfer(Game.getBusinessman(), Game.getBusinessman().getCompany());
-        t.showAndWait();
+        Transfer transfer = new Transfer(Game.getBusinessman(), Game.getBusinessman().getCompany());
+        transfer.showAndWait();
         updateData();
     }
 

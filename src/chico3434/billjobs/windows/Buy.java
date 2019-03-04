@@ -68,32 +68,36 @@ public class Buy {
         makePurchase(lbl5.getText(), lbl6.getText());
     }
 
-    public void makePurchase(String s, String s1){
-        if (Screen.buy.equals("Server")){
-            try {
-                Game.buyServer(Double.parseDouble(s.replace(',','.')), Integer.parseInt(s1));
-                Main.buy.close();
-            } catch (MissingFunds missingFunds) {
-                Alert a = new Alert(Alert.AlertType.WARNING, missingFunds.toString());
-                a.show();
-            }
-        } else if (Screen.buy.equals("Fábrica")){
-            try{
-                String[] split = s1.split(";");
-                Game.buyFactory(Double.parseDouble(s.replace(',','.')), Integer.parseInt(split[1]), Integer.parseInt(split[0]));
-                Main.buy.close();
-            } catch (MissingFunds missingFunds){
-                Alert a = new Alert(Alert.AlertType.WARNING, missingFunds.toString());
-                a.show();
-            }
-        } else if (Screen.buy.equals("Galpão")){
-            try {
-                Game.buyShed(Double.parseDouble(s.replace(',','.')), Integer.parseInt(s1));
-                Main.buy.close();
-            } catch (MissingFunds missingFunds) {
-                Alert a = new Alert(Alert.AlertType.WARNING, missingFunds.toString());
-                a.show();
-            }
+    private void makePurchase(String s, String s1){
+        switch (Screen.buy) {
+            case "Server":
+                try {
+                    Game.buyServer(Double.parseDouble(s.replace(',', '.')), Integer.parseInt(s1));
+                    Main.buy.close();
+                } catch (MissingFunds missingFunds) {
+                    Alert a = new Alert(Alert.AlertType.WARNING, missingFunds.toString());
+                    a.show();
+                }
+                break;
+            case "Fábrica":
+                try {
+                    String[] split = s1.split(";");
+                    Game.buyFactory(Double.parseDouble(s.replace(',', '.')), Integer.parseInt(split[1]), Integer.parseInt(split[0]));
+                    Main.buy.close();
+                } catch (MissingFunds missingFunds) {
+                    Alert a = new Alert(Alert.AlertType.WARNING, missingFunds.toString());
+                    a.show();
+                }
+                break;
+            case "Galpão":
+                try {
+                    Game.buyShed(Double.parseDouble(s.replace(',', '.')), Integer.parseInt(s1));
+                    Main.buy.close();
+                } catch (MissingFunds missingFunds) {
+                    Alert a = new Alert(Alert.AlertType.WARNING, missingFunds.toString());
+                    a.show();
+                }
+                break;
         }
     }
 }
