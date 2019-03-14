@@ -29,32 +29,36 @@ public class Buy {
     @FXML
     private Label lbl6;
 
-    public void initialize(){
+    public void initialize() {
         Random r = new Random();
-        if (Screen.buy.equals("Server")) {
-            lbl1.setText(String.format("%.2f", 1000 + (r.nextDouble() * 1000)));
-            lbl3.setText(String.format("%.2f", 5000 + (r.nextDouble() * 5000)));
-            lbl5.setText(String.format("%.2f", 10000 + (r.nextDouble() * 10000)));
+        switch (Screen.buy) {
+            case "Server":
+                lbl1.setText(String.format("%.2f", 1000 + (r.nextDouble() * 1000)));
+                lbl3.setText(String.format("%.2f", 5000 + (r.nextDouble() * 5000)));
+                lbl5.setText(String.format("%.2f", 10000 + (r.nextDouble() * 10000)));
 
-            lbl2.setText(String.valueOf(1 + r.nextInt(2)));
-            lbl4.setText(String.valueOf(5 + r.nextInt(5)));
-            lbl6.setText(String.valueOf(10 + r.nextInt(10)));
-        } else if (Screen.buy.equals("Fábrica")) {
-            lbl1.setText(String.format("%.2f", 1000 + (r.nextDouble() * 1000)));
-            lbl3.setText(String.format("%.2f", 5000 + (r.nextDouble() * 5000)));
-            lbl5.setText(String.format("%.2f", 10000 + (r.nextDouble() * 10000)));
+                lbl2.setText(String.valueOf(1 + r.nextInt(2)));
+                lbl4.setText(String.valueOf(5 + r.nextInt(5)));
+                lbl6.setText(String.valueOf(10 + r.nextInt(10)));
+                break;
+            case "Fábrica":
+                lbl1.setText(String.format("%.2f", 1000 + (r.nextDouble() * 1000)));
+                lbl3.setText(String.format("%.2f", 5000 + (r.nextDouble() * 5000)));
+                lbl5.setText(String.format("%.2f", 10000 + (r.nextDouble() * 10000)));
 
-            lbl2.setText(String.valueOf(1 + r.nextInt(2)) + ";" + String.valueOf(100 + r.nextInt(100)));
-            lbl4.setText(String.valueOf(5 + r.nextInt(5)) + ";" + String.valueOf(500 + r.nextInt(500)));
-            lbl6.setText(String.valueOf(10 + r.nextInt(10)) + ";" + String.valueOf(1000 + r.nextInt(1000)));
-        } else if (Screen.buy.equals("Galpão")) {
-            lbl1.setText(String.format("%.2f", 1000 + (r.nextDouble() * 1000)));
-            lbl3.setText(String.format("%.2f", 5000 + (r.nextDouble() * 5000)));
-            lbl5.setText(String.format("%.2f", 10000 + (r.nextDouble() * 10000)));
+                lbl2.setText((1 + r.nextInt(2)) + " ; " + (100 + r.nextInt(100)));
+                lbl4.setText((5 + r.nextInt(5)) + " ; " + (500 + r.nextInt(500)));
+                lbl6.setText((10 + r.nextInt(10)) + " ; " + (1000 + r.nextInt(1000)));
+                break;
+            case "Galpão":
+                lbl1.setText(String.format("%.2f", 1000 + (r.nextDouble() * 1000)));
+                lbl3.setText(String.format("%.2f", 5000 + (r.nextDouble() * 5000)));
+                lbl5.setText(String.format("%.2f", 10000 + (r.nextDouble() * 10000)));
 
-            lbl2.setText(String.valueOf(1000 + r.nextInt(1000)));
-            lbl4.setText(String.valueOf(10000 + r.nextInt(10000)));
-            lbl6.setText(String.valueOf(100000 + r.nextInt(100000)));
+                lbl2.setText(String.valueOf(1000 + r.nextInt(1000)));
+                lbl4.setText(String.valueOf(10000 + r.nextInt(10000)));
+                lbl6.setText(String.valueOf(100000 + r.nextInt(100000)));
+                break;
         }
     }
 
